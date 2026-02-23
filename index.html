@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>JoodKids</title>
+  <link rel="manifest" href="manifest.webmanifest"/>
+  <link rel="icon" href="logo.png"/>
+  <link rel="apple-touch-icon" href="logo.png"/>
+  <meta name="theme-color" content="#0b1020"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <div class="brand" id="brandBtn" title="JoodKids">
+        <div class="brand__mark"><img src="logo.png" alt="" style="width:36px;height:36px;border-radius:12px;object-fit:cover"/></div>
+        <div class="brand__text">
+          <div class="brand__title">JoodKids</div>
+          <div class="brand__subtitle">بيع جملة فقط</div>
+        </div>
+      </div>
+      <div class="topbar__actions">
+        <button class="iconBtn" id="btnTheme" type="button" aria-label="تبديل الوضع">🌓</button>
+        <button class="cartBtn" id="btnCart" type="button">
+          <span>🛒</span>
+          <span class="cartBtn__label">السلة</span>
+          <span class="badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container page">
+    <section class="hero">
+      <h1>متجر الجملة</h1>
+      <p>اختر المنتج، أضف للسلة، وأرسل الطلب مباشرة.</p>
+
+      <div class="installBanner" id="installBanner">
+        <div class="left">
+          <img src="logo.png" alt=""/>
+          <div>
+            <div style="font-weight:950">تثبيت المتجر</div>
+            <div class="small">ثبّت المتجر على الشاشة الرئيسية لفتح أسرع.</div>
+          </div>
+        </div>
+        <button class="btn" id="btnInstall" type="button">تثبيت</button>
+      </div>
+
+      <div class="hero__row">
+        <div class="search">
+          <span>🔎</span>
+          <input id="q" placeholder="ابحث بالاسم أو الموديل أو المقاس..." autocomplete="off"/>
+          <span class="hint" id="resHint"></span>
+        </div>
+
+        <div class="filters">
+          <select class="select" id="filterCategory" aria-label="التصنيف">
+            <option value="">كل التصنيفات</option>
+          </select>
+          <select class="select" id="filterSeason" aria-label="الموسم">
+            <option value="">كل المواسم</option>
+            <option value="صيفي">صيفي</option>
+            <option value="شتوي">شتوي</option>
+            <option value="خريفي">خريفي</option>
+          </select>
+          <select class="select" id="sortBy" aria-label="الترتيب">
+            <option value="new">الأحدث</option>
+            <option value="priceAsc">السعر: الأقل</option>
+            <option value="priceDesc">السعر: الأعلى</option>
+            <option value="modelAsc">الموديل: تصاعدي</option>
+          </select>
+          <button class="toggle" id="onlyInStock" type="button" aria-pressed="false">✅ المتوفر فقط</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div id="skeleton" class="grid" aria-hidden="true" style="margin-top:12px">
+        <div class="card"><div class="card__img"></div><div class="card__body"><div style="height:14px;background:rgba(255,255,255,.12);border-radius:10px;width:70%"></div><div style="height:10px;background:rgba(255,255,255,.10);border-radius:10px;width:55%"></div><div style="height:42px;background:rgba(255,255,255,.10);border-radius:14px"></div></div></div><div class="card"><div class="card__img"></div><div class="card__body"><div style="height:14px;background:rgba(255,255,255,.12);border-radius:10px;width:70%"></div><div style="height:10px;background:rgba(255,255,255,.10);border-radius:10px;width:55%"></div><div style="height:42px;background:rgba(255,255,255,.10);border-radius:14px"></div></div></div><div class="card"><div class="card__img"></div><div class="card__body"><div style="height:14px;background:rgba(255,255,255,.12);border-radius:10px;width:70%"></div><div style="height:10px;background:rgba(255,255,255,.10);border-radius:10px;width:55%"></div><div style="height:42px;background:rgba(255,255,255,.10);border-radius:14px"></div></div></div><div class="card"><div class="card__img"></div><div class="card__body"><div style="height:14px;background:rgba(255,255,255,.12);border-radius:10px;width:70%"></div><div style="height:10px;background:rgba(255,255,255,.10);border-radius:10px;width:55%"></div><div style="height:42px;background:rgba(255,255,255,.10);border-radius:14px"></div></div></div><div class="card"><div class="card__img"></div><div class="card__body"><div style="height:14px;background:rgba(255,255,255,.12);border-radius:10px;width:70%"></div><div style="height:10px;background:rgba(255,255,255,.10);border-radius:10px;width:55%"></div><div style="height:42px;background:rgba(255,255,255,.10);border-radius:14px"></div></div></div><div class="card"><div class="card__img"></div><div class="card__body"><div style="height:14px;background:rgba(255,255,255,.12);border-radius:10px;width:70%"></div><div style="height:10px;background:rgba(255,255,255,.10);border-radius:10px;width:55%"></div><div style="height:42px;background:rgba(255,255,255,.10);border-radius:14px"></div></div></div><div class="card"><div class="card__img"></div><div class="card__body"><div style="height:14px;background:rgba(255,255,255,.12);border-radius:10px;width:70%"></div><div style="height:10px;background:rgba(255,255,255,.10);border-radius:10px;width:55%"></div><div style="height:42px;background:rgba(255,255,255,.10);border-radius:14px"></div></div></div><div class="card"><div class="card__img"></div><div class="card__body"><div style="height:14px;background:rgba(255,255,255,.12);border-radius:10px;width:70%"></div><div style="height:10px;background:rgba(255,255,255,.10);border-radius:10px;width:55%"></div><div style="height:42px;background:rgba(255,255,255,.10);border-radius:14px"></div></div></div>
+      </div>
+      <div id="grid" class="grid" style="display:none"></div>
+      <div id="empty" class="footer" style="display:none;margin-top:12px">
+        <div style="font-weight:950;margin-bottom:6px">لا توجد نتائج</div>
+        <div class="small">جرّب تغيير البحث أو الفلاتر.</div>
+      </div>
+    </section>
+
+    <section class="footer">
+      <div class="footerRow">
+        <div>
+          <div style="font-weight:950">طرق الدفع</div>
+          <div class="small">اختر طريقة الدفع أثناء إتمام الطلب.</div>
+        </div>
+        <div class="payments" aria-label="طرق الدفع">
+          <div class="payIcon"><span class="dot"></span> فودافون كاش</div>
+          <div class="payIcon"><span class="dot"></span> اتصالات كاش</div>
+          <div class="payIcon"><span class="dot"></span> أورنج كاش</div>
+          <div class="payIcon"><span class="dot"></span> انستا باي</div>
+          <div class="payIcon"><span class="dot"></span> كاش</div>
+        </div>
+      </div>
+      <div class="hr"></div>
+      <div class="footerRow">
+        <div class="small" id="companyLine">—</div>
+        <button class="btn secondary" id="btnContact" type="button">تواصل معنا</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Cart -->
+  <div class="modal" id="cartModal" role="dialog" aria-modal="true">
+    <div class="sheet">
+      <div class="sheet__head">
+        <div class="sheet__title">السلة</div>
+        <button class="close" id="closeCart" type="button" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="sheet__body">
+        <div id="cartList" class="cartList"></div>
+        <div class="hr"></div>
+        <div class="totalRow"><span>الإجمالي</span><span id="cartTotal">0</span></div>
+        <div class="row">
+          <button class="btn secondary" id="btnClearCart" type="button">تفريغ السلة</button>
+          <button class="btn" id="btnCheckout" type="button">إتمام الطلب</button>
+        </div>
+        <div class="small">البيع بالجملة فقط.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout -->
+  <div class="modal" id="checkoutModal" role="dialog" aria-modal="true">
+    <div class="sheet">
+      <div class="sheet__head">
+        <div class="sheet__title">إتمام الطلب</div>
+        <button class="close" id="closeCheckout" type="button" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="sheet__body">
+        <div class="row">
+          <div class="field">
+            <label>الاسم</label>
+            <input id="cName" placeholder="اسم العميل"/>
+          </div>
+          <div class="field">
+            <label>الهاتف</label>
+            <input id="cPhone" inputmode="tel" placeholder="مثال: 01xxxxxxxxx"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>المدينة</label>
+            <input id="cCity" placeholder="المدينة"/>
+          </div>
+          <div class="field">
+            <label>العنوان</label>
+            <input id="cAddress" placeholder="العنوان بالتفصيل"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>طريقة الدفع</label>
+            <select id="payMethod">
+              <option value="كاش">كاش</option>
+              <option value="بوليصة شحن">بوليصة شحن</option>
+              <option value="انستا باي">انستا باي</option>
+              <option value="فودافون كاش">فودافون كاش</option>
+              <option value="اتصالات كاش">اتصالات كاش</option>
+              <option value="أورنج كاش">أورنج كاش</option>
+              <option value="تحويل بنكي">تحويل بنكي</option>
+              <option value="نقداً من أحد الفروع">نقداً من أحد الفروع</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="footer" style="margin:0">
+          <div style="font-weight:950;margin-bottom:6px">سياسة الدفع والاسترجاع</div>
+          <div class="small" id="policyText"></div>
+        </div>
+
+        <div class="row">
+          <button class="btn secondary" id="btnPolicy" type="button">فتح السياسة كاملة</button>
+          <button class="btn" id="btnSendOrder" type="button">إرسال الطلب</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="modal" id="contactModal" role="dialog" aria-modal="true">
+    <div class="sheet">
+      <div class="sheet__head">
+        <div class="sheet__title">تواصل معنا</div>
+        <button class="close" id="closeContact" type="button" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="sheet__body">
+        <div class="row">
+          <button class="btn" id="goWhats" type="button">واتساب</button>
+          <button class="btn secondary" id="goFb" type="button">فيسبوك</button>
+          <button class="btn secondary" id="goIg" type="button">انستجرام</button>
+          <button class="btn secondary" id="goTg" type="button">تليجرام</button>
+        </div>
+        <div class="row">
+          <button class="btn secondary" id="goFactoryMap" type="button">موقع المصنع</button>
+          <button class="btn secondary" id="goShopMap" type="button">موقع المحل</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Policy -->
+  <div class="modal" id="policyModal" role="dialog" aria-modal="true">
+    <div class="sheet">
+      <div class="sheet__head">
+        <div class="sheet__title">السياسة</div>
+        <button class="close" id="closePolicy" type="button" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="sheet__body">
+        <div class="small" id="policyFull"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <img id="lightboxImg" alt=""/>
+  </div>
+
+  <div class="toastWrap" id="toasts"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

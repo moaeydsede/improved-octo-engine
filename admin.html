@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>لوحة التحكم</title>
+  <link rel="icon" href="logo.png"/>
+  <link rel="manifest" href="manifest.webmanifest"/>
+  <meta name="theme-color" content="#0b1020"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <div class="brand" id="homeBtn" title="رجوع للمتجر">
+        <div class="brand__mark"><img src="logo.png" alt="" style="width:36px;height:36px;border-radius:12px;object-fit:cover"/></div>
+        <div class="brand__text">
+          <div class="brand__title">لوحة التحكم</div>
+          <div class="brand__subtitle" id="adminState">—</div>
+        </div>
+      </div>
+      <div class="topbar__actions">
+        <button class="iconBtn" id="btnTheme" type="button" aria-label="تبديل الوضع">🌓</button>
+        <button class="btn secondary" id="btnAuth" type="button">تسجيل الدخول</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container page">
+    <section class="hero">
+      <h1>إدارة المتجر</h1>
+      <p>إضافة/تعديل/حذف المنتجات + بيانات الشركة + استيراد/تصدير CSV + إدارة الطلبات.</p>
+
+      <div class="hero__row">
+        <div class="search" style="min-width:260px">
+          <span>🔎</span>
+          <input id="q" placeholder="بحث داخل المنتجات..." autocomplete="off"/>
+          <span class="hint" id="resHint"></span>
+        </div>
+        <div class="filters">
+          <button class="btn" id="btnNew" type="button">إضافة منتج</button>
+          <button class="btn secondary" id="btnCompany" type="button">بيانات الشركة</button>
+          <button class="btn secondary" id="btnExport" type="button">تصدير CSV</button>
+          <label class="btn secondary" style="cursor:pointer">
+            استيراد CSV
+            <input id="importFile" type="file" accept=".csv" style="display:none">
+          </label>
+          <button class="btn secondary" id="btnOrders" type="button">الطلبات</button>
+          <button class="btn secondary" id="btnNuke" type="button" title="حذف كل البيانات">حذف جميع البيانات</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div id="grid" class="grid" style="margin-top:12px"></div>
+      <div id="empty" class="footer" style="display:none;margin-top:12px">
+        <div style="font-weight:950;margin-bottom:6px">لا توجد منتجات</div>
+        <div class="small">أضف منتجات من زر “إضافة منتج”.</div>
+      </div>
+    </section>
+
+    <section class="footer">
+      <div style="font-weight:950;margin-bottom:6px">رفع الصور</div>
+      <div class="small">
+        رفع الصور يتم عبر Cloudinary. ضع <b>Upload Preset</b> (Unsigned) مرة واحدة داخل “بيانات الشركة”.
+      </div>
+    </section>
+  </main>
+
+  <!-- Product editor -->
+  <div class="modal" id="productModal" role="dialog" aria-modal="true">
+    <div class="sheet">
+      <div class="sheet__head">
+        <div class="sheet__title" id="pmTitle">منتج</div>
+        <button class="close" id="closeProduct" type="button" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="sheet__body">
+        <div class="row">
+          <div class="field">
+            <label>اسم المنتج</label>
+            <input id="pName" placeholder="مثال: طقم أطفال"/>
+          </div>
+          <div class="field">
+            <label>الموديل</label>
+            <input id="pModel" inputmode="numeric" placeholder="مثال: 1852"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>سعر الجملة</label>
+            <input id="pPrice" inputmode="decimal" placeholder="مثال: 350"/>
+          </div>
+          <div class="field">
+            <label>المقاسات (مفصولة بمسافة)</label>
+            <input id="pSizes" placeholder="مثال: 6 12 18"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>الموسم</label>
+            <select id="pSeason">
+              <option value="">—</option>
+              <option value="صيفي">صيفي</option>
+              <option value="شتوي">شتوي</option>
+              <option value="خريفي">خريفي</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>متوفر</label>
+            <select id="pStock">
+              <option value="true">نعم</option>
+              <option value="false">لا</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>إخفاء من المتجر</label>
+            <select id="pHidden">
+              <option value="false">لا</option>
+              <option value="true">نعم</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>وصف (اختياري)</label>
+            <input id="pDesc" placeholder="وصف قصير"/>
+          </div>
+        </div>
+
+        <div class="footer" style="margin:0">
+          <div style="font-weight:950;margin-bottom:8px">الصور</div>
+          <div class="row">
+            <label class="btn secondary" style="cursor:pointer">
+              رفع صورة
+              <input id="pImgFile" type="file" accept="image/*" style="display:none">
+            </label>
+            <div class="field" style="min-width:240px">
+              <label>أو رابط صورة</label>
+              <input id="pImgUrl" placeholder="https://..."/>
+            </div>
+            <button class="btn secondary" id="btnAddImg" type="button">إضافة</button>
+          </div>
+          <div class="small">اضغط على الصورة لحذفها.</div>
+          <div class="row" id="imgPreview" style="margin-top:10px"></div>
+        </div>
+
+        <div class="row">
+          <button class="btn secondary" id="btnDelete" type="button">حذف المنتج</button>
+          <button class="btn" id="btnSave" type="button">حفظ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company editor -->
+  <div class="modal" id="companyModal" role="dialog" aria-modal="true">
+    <div class="sheet">
+      <div class="sheet__head">
+        <div class="sheet__title">بيانات الشركة</div>
+        <button class="close" id="closeCompany" type="button" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="sheet__body">
+        <div class="row">
+          <div class="field">
+            <label>اسم الشركة</label>
+            <input id="coName" placeholder="JoodKids"/>
+          </div>
+          <div class="field">
+            <label>واتساب (رقم دولي بدون +)</label>
+            <input id="coWhats" inputmode="tel" placeholder="201155590838"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>فيسبوك</label>
+            <input id="coFb" placeholder="https://facebook.com/..."/>
+          </div>
+          <div class="field">
+            <label>انستجرام</label>
+            <input id="coIg" placeholder="https://instagram.com/..."/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>تليجرام</label>
+            <input id="coTg" placeholder="https://t.me/..."/>
+          </div>
+          <div class="field">
+            <label>موقع المصنع (خرائط)</label>
+            <input id="coFactoryMap" placeholder="https://maps.app.goo.gl/..."/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>موقع المحل (خرائط)</label>
+            <input id="coShopMap" placeholder="https://maps.app.goo.gl/..."/>
+          </div>
+          <div class="field">
+            <label>عنوان مختصر (يظهر أسفل الموقع)</label>
+            <input id="coLine" placeholder="—"/>
+          </div>
+        </div>
+
+        <div class="footer" style="margin:0">
+          <div style="font-weight:950;margin-bottom:6px">Cloudinary (رفع الصور)</div>
+          <div class="row">
+            <div class="field">
+              <label>Upload Preset (Unsigned)</label>
+              <input id="coPreset" placeholder="مثال: joodkids_unsigned"/>
+            </div>
+            <div class="field">
+              <label>Folder</label>
+              <input id="coFolder" placeholder="Joodkids"/>
+            </div>
+          </div>
+          <div class="small">مطلوب Upload Preset غير موقّع لتعمل الرفع من المتصفح.</div>
+        </div>
+
+        <div class="row">
+          <button class="btn" id="btnSaveCompany" type="button">حفظ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders -->
+  <div class="modal" id="ordersModal" role="dialog" aria-modal="true">
+    <div class="sheet">
+      <div class="sheet__head">
+        <div class="sheet__title">الطلبات</div>
+        <button class="close" id="closeOrders" type="button" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="sheet__body">
+        <div id="ordersList" class="cartList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toastWrap" id="toasts"></div>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>
